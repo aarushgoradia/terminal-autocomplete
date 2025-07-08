@@ -4,7 +4,7 @@ A lightweight ML-powered CLI tool that autocompletes your terminal commands base
 
 
 
-## 🚀 Features
+## Features
 
 - LSTM-based next-token prediction
 - Tokenizer, batching, vocab, and training pipeline
@@ -15,7 +15,7 @@ A lightweight ML-powered CLI tool that autocompletes your terminal commands base
 
 
 
-## 📁 Project Structure
+## Project Structure
 
 ``` bash
 ml-terminal-autocomplete/
@@ -36,7 +36,7 @@ ml-terminal-autocomplete/
 └── README.md
 ```
 
-## 🛠️ Setup
+## Setup
 
 ```bash
 # Clone the repo
@@ -51,13 +51,13 @@ source venv/bin/activate   # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 ```
 
-## 🧠 Train the Model
+## Train the Model
 ```bash
 python model/dataset.py        # Tokenize + save sequences
 python model/train_model.py    # Train and save best model
 ```
 
-## 🧪 Run Interactive CLI
+## Run Interactive CLI
 ```bash
 python -m main interactive start
 ```
@@ -72,7 +72,7 @@ Example:
 │ commit       │ 0.0544      │
 ╰──────────────┴─────────────╯
 ```
-## 🚧 Roadmap
+## Roadmap
 
 This project is functional end-to-end, but there are several areas for improvement to increase usefulness, accuracy, and polish:
 
