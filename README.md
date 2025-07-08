@@ -62,6 +62,7 @@ python model/train_model.py    # Train and save best model
 python cli/main.py interactive
 ```
 Example:
+```bash
 >>> git ch
 ╭──────────────┬─────────────╮
 │ Token        │ Probability │
@@ -70,7 +71,7 @@ Example:
 │ cherry-pick  │ 0.0921      │
 │ commit       │ 0.0544      │
 ╰──────────────┴─────────────╯
-
+```
 ## 📄 License
 MIT License
 
