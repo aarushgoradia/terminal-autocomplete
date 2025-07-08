@@ -1,121 +1,117 @@
 import os
+import re
+import json
 import pickle
-import random
-import torch
 from collections import Counter
+from typing import List, Tuple
 
-PAD_TOKEN = "<PAD>"
-UNK_TOKEN = "<UNK>"
-EOS_TOKEN = "<EOS>"
+# ====== Tokenization Mode ======
+TOKEN_LEVEL = "char"  # change to "word" or "char"
 
-def load_raw_history(filepath):
-    """
-    Load lines from a bash history file, stripping empty or comment lines.
-    """
-    with open(filepath, "r") as f:
-        lines = [line.strip() for line in f if line.strip() and not line.startswith("#")]
-    return lines
+# ====== Tokenizer ======
+def tokenize(line: str) -> List[str]:
+    if TOKEN_LEVEL == "char":
+        return list(line.strip()) + ["<EOS>"]
+    else:
+        return line.strip().split() + ["<EOS>"]
 
-def tokenize(line):
+# ====== Sequence Generator ======
+def generate_sequences(lines: List[str], add_prefixes: bool = True, max_prefixes_per_token: int = 3) -> List[Tuple[List[str], str]]:
     """
-    Simple whitespace tokenizer.
-    """
-    return line.split()
-
-def generate_sequences(lines):
-    """
-    Converts lines of commands into (input, target) training pairs.
-    Each token in a command becomes part of an input sequence with the next token as target.
+    Generate input→target token pairs.
+    If char-level, adds all character-based sequence pairs.
+    If word-level, optionally includes token prefixes like 'git ch' → 'checkout'.
     """
     sequences = []
     for line in lines:
         tokens = tokenize(line)
-        if not tokens:
-            continue
-        tokens.append(EOS_TOKEN)  # End of sequence token
         for i in range(1, len(tokens)):
             input_seq = tokens[:i]
-            target_token = tokens[i]
-            sequences.append((input_seq, target_token))
+            target = tokens[i]
+            sequences.append((input_seq, target))
+
+            # Add prefixes only for word-level
+            if TOKEN_LEVEL == "word" and add_prefixes and 1 < len(target) <= 10 and re.match(r"^[a-zA-Z0-9\-_/]+$", target):
+                for j in range(2, min(len(target), 6)):
+                    prefix = target[:j]
+                    sequences.append((input_seq[:-1] + [prefix], target))
     return sequences
 
-def save_sequences(sequences, output_path):
-    """
-    Save tokenized sequences to a binary .pkl file.
-    """
-    with open(output_path, "wb") as f:
-        pickle.dump(sequences, f)
-
-def load_sequences(input_path):
-    """
-    Load tokenized sequences from a .pkl file.
-    """
-    with open(input_path, "rb") as f:
-        return pickle.load(f)
-
-def pad_sequence(seq, max_len, pad_token_id):
-    return seq + [pad_token_id] * (max_len - len(seq))
-
-def build_vocab(sequences, min_freq=1):
-    """
-    Builds vocab dicts from token sequences.
-    """
+# ====== Vocab Builder ======
+def build_vocab(sequences: List[Tuple[List[str], str]], min_freq: int = 1):
     counter = Counter()
     for input_seq, target in sequences:
         counter.update(input_seq)
         counter.update([target])
+    special_tokens = ["<PAD>", "<UNK>", "<EOS>"]
+    all_tokens = special_tokens + sorted(set(tok for tok, count in counter.items() if count >= min_freq and tok not in special_tokens))
+    token2id = {tok: idx for idx, tok in enumerate(all_tokens)}
+    id2token = {idx: tok for tok, idx in token2id.items()}
+    return token2id, id2token
 
-    vocab = {PAD_TOKEN: 0, UNK_TOKEN: 1, EOS_TOKEN: 2}
-    idx = len(vocab)
+def save_vocab(token2id: dict, path: str):
+    with open(path, "w") as f:
+        json.dump(token2id, f)
 
-    for word, freq in counter.items():
-        if freq >= min_freq and word not in vocab:
-            vocab[word] = idx
-            idx += 1
+def load_vocab(path: str):
+    with open(path, "r") as f:
+        token2id = json.load(f)
+    id2token = {v: k for k, v in token2id.items()}
+    return token2id, id2token
 
-    return vocab
+# ====== Sequence Save/Load ======
+def save_sequences(sequences: List[Tuple[List[str], str]], path: str):
+    with open(path, "wb") as f:
+        pickle.dump(sequences, f)
 
-def batchify(sequences, vocab, batch_size=32):
-    """
-    Yields batches of padded tokenized input sequences and target tokens.
-    """
-    random.shuffle(sequences)
-    pad_token_id = vocab[PAD_TOKEN]
-    unk_token_id = vocab[UNK_TOKEN]
+def load_sequences(path: str):
+    with open(path, "rb") as f:
+        return pickle.load(f)
 
+# ====== Batching ======
+def batchify(sequences: List[Tuple[List[str], str]], token2id: dict, batch_size: int = 32, max_len: int = 64):
+    import torch
+    pad_id = token2id.get("<PAD>", 0)
+    unk_id = token2id.get("<UNK>", 1)
+
+    def encode(seq):
+        return [token2id.get(tok, unk_id) for tok in seq]
+
+    batches = []
     for i in range(0, len(sequences), batch_size):
-        batch = sequences[i:i+batch_size]
-        input_seqs = []
-        target_tokens = []
+        batch = sequences[i:i + batch_size]
+        input_seqs = [encode(seq[:max_len]) for seq, _ in batch]
+        targets = [token2id.get(target, unk_id) for _, target in batch]
+        max_seq_len = max(len(seq) for seq in input_seqs)
+        padded = [seq + [pad_id] * (max_seq_len - len(seq)) for seq in input_seqs]
 
-        for input_seq, target in batch:
-            input_ids = [vocab.get(tok, unk_token_id) for tok in input_seq]
-            target_id = vocab.get(target, unk_token_id)
-            input_seqs.append(input_ids)
-            target_tokens.append(target_id)
+        input_tensor = torch.tensor(padded, dtype=torch.long)
+        target_tensor = torch.tensor(targets, dtype=torch.long)
+        batches.append((input_tensor, target_tensor))
+    return batches
 
-        max_len = max(len(seq) for seq in input_seqs)
-        padded_inputs = [pad_sequence(seq, max_len, pad_token_id) for seq in input_seqs]
-
-        yield torch.tensor(padded_inputs, dtype=torch.long), torch.tensor(target_tokens, dtype=torch.long)
-
-
+# ====== CLI Entrypoint ======
 if __name__ == "__main__":
     raw_path = "data/bash_history.txt"
-    processed_path = "data/tokenized_sequences.pkl"
+    seq_path = "data/tokenized_sequences.pkl"
+    vocab_path = "data/vocab.json"
 
-    print("[*] Loading raw history...")
-    lines = load_raw_history(raw_path)
+    print(f"[*] Using {TOKEN_LEVEL}-level tokenization")
+    print(f"[*] Loading data from {raw_path}")
+    with open(raw_path, "r") as f:
+        lines = [line.strip() for line in f if line.strip()]
 
-    print(f"[*] Tokenizing {len(lines)} lines...")
-    sequences = generate_sequences(lines)
+    print("[*] Generating sequences...")
+    sequences = generate_sequences(lines, add_prefixes=True)
+    save_sequences(sequences, seq_path)
+    print(f"[*] Saved {len(sequences)} sequences to {seq_path}")
 
-    print(f"[*] Saving {len(sequences)} input-target pairs to {processed_path}")
-    save_sequences(sequences, processed_path)
+    print("[*] Building vocab...")
+    token2id, id2token = build_vocab(sequences)
+    save_vocab(token2id, vocab_path)
+    print(f"[*] Saved vocab with {len(token2id)} tokens to {vocab_path}")
 
-    # Optional test
-    print("[*] Sample sequences:")
+    print("[*] Sample examples:")
     for i in range(5):
-        print("Input :", sequences[i][0])
+        print("Input:", sequences[i][0])
         print("Target:", sequences[i][1])
-        print("---")

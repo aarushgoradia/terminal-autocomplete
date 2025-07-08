@@ -1,0 +1,44 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Jupyter or IPython stuff (just in case)
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.env/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Compiled model/data
+*.pt
+*.pkl
+*.pickle
+
+# Your model + vocab
+saved_models/
+data/tokenized_sequences.pkl
+data/vocab.json
+
+# Large input file (can regenerate)
+data/bash_history.txt
+data/bash_history_2500.txt
+
+# Logs / debug output
+*.log
+*.tmp
+
+# CLI history
+.history
+
+# Pip-related
+pip-wheel-metadata/
+*.egg-info/
