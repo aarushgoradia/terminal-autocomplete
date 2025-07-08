@@ -6,12 +6,12 @@ A lightweight ML-powered CLI tool that autocompletes your terminal commands base
 
 ## 🚀 Features
 
-- 🧠 LSTM-based next-token prediction
-- 📦 Tokenizer, batching, vocab, and training pipeline
-- ⚙️ Interactive CLI with `typer`
-- 🎨 Beautiful `rich` table output
-- 💾 Reusable model + vocab loading
-- ⚡ CUDA and CPU-compatible
+- LSTM-based next-token prediction
+- Tokenizer, batching, vocab, and training pipeline
+- Interactive CLI with `typer`
+- Beautiful `rich` table output
+- Reusable model + vocab loading
+- CUDA and CPU-compatible
 
 ---
 
@@ -79,7 +79,7 @@ Example:
 
 This project is functional end-to-end, but there are several areas for improvement to increase usefulness, accuracy, and polish:
 
-### ✅ Phase 1 – Core Functionality (✔ Completed)
+### Phase 1 – Core Functionality
 - [x] Load and preprocess a user’s `bash_history`
 - [x] Tokenize sequences (char-level)
 - [x] Train an LSTM-based model to predict the next character
@@ -89,7 +89,7 @@ This project is functional end-to-end, but there are several areas for improveme
 
 ---
 
-### 🔄 Phase 2 – Model Improvement (⚙ In Progress)
+### Phase 2 – Model Improvement (In Progress)
 - [ ] Switch to **token-level modeling** (predict next full token, not character)
 - [ ] Improve dataset quality (real-world command history, fewer `<UNK>` tokens)
 - [ ] Add greedy or beam search to complete full word predictions from char-level model (if char-level is kept)
@@ -99,7 +99,7 @@ This project is functional end-to-end, but there are several areas for improveme
 
 ---
 
-### 📊 Phase 3 – Evaluation & Testing
+### Phase 3 – Evaluation & Testing
 - [ ] Add train/val/test split (e.g., 80/10/10)
 - [ ] Report metrics during training (e.g., loss, accuracy)
 - [ ] Add test-time evaluation: given real partial commands, does the model predict the correct token?
@@ -107,7 +107,7 @@ This project is functional end-to-end, but there are several areas for improveme
 
 ---
 
-### 🎯 Phase 4 – User Experience & Features
+### Phase 4 – User Experience & Features
 - [ ] Add shell-style **autocomplete** (TAB-key mimic, fuzzy match)
 - [ ] Auto-complete full commands rather than just showing suggestions
 - [ ] Add CLI option to show top-k completions as a single line or inline
@@ -116,7 +116,7 @@ This project is functional end-to-end, but there are several areas for improveme
 
 ---
 
-### 📦 Phase 5 – Deployment & Distribution
+### Phase 5 – Deployment & Distribution
 - [ ] Add `pip` install support (e.g., `pip install ml-terminal-autocomplete`)
 - [ ] Dockerize for easy use anywhere
 - [ ] Publish demo video/gif in README
