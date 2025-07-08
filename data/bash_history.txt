@@ -1,0 +1,500 @@
+make
+kill 9660
+cd ~
+clear
+python3 -m venv venv
+ls
+chown user:user app
+ls
+mkdir
+scp app admin@dev.box:/home/dev
+chmod +x utils
+kill -9 1801
+tmux new -s test
+unzip {archive}.zip
+deactivate
+tmux new -s test
+history
+python script.py
+sudo apt update
+ls -la
+mkdir
+git push
+nano
+touch
+top
+sudo apt update
+cd ..
+pip install torch
+chown user:user utils
+chown user:user utils
+source venv/bin/activate
+pytest
+ls
+chown dev:dev main
+kill -9 6062
+vim
+whoami
+pytest
+./utils
+git add .
+make
+pip install pytest
+rm
+./main
+whoami
+cat
+cd /etc
+rm
+python3 -m venv venv
+history
+wget https://api.openai.com
+cd ..
+python3 -m venv venv
+tmux new -s dev
+kill 8250
+python3 predict.py
+cd ~
+pip uninstall requests
+wget https://api.openai.com
+make
+chmod +x test
+vim
+history
+git push
+python3 predict.py
+vim
+pip uninstall torch
+python predict.py
+ls -la
+python predict.py
+tar -xzvf utils.tar.gz
+python train.py
+kill 8995
+python3 -m venv venv
+git add .
+chown user:user main
+scp utils dev@dev.box:~/projects
+vim
+cd /etc
+zip {archive}.zip app
+git commit -m "initial commit"
+clear
+clear
+cd ~
+sudo apt install requests
+zip {archive}.zip main
+pip uninstall torch
+cat
+top
+git commit -m "cleanup"
+git commit -m "update README"
+git add .
+make
+ls -la
+clang app.c -o app
+kill 8250
+clang app.c -o app
+python3 script.py
+sudo apt install torch
+cd
+cd
+deactivate
+touch
+cd
+./test
+clang utils.c -o utils
+deactivate
+ssh dev@remote.server.com
+ls
+ps aux
+unzip {archive}.zip
+cd
+clear
+kill 4123
+deactivate
+ls -la
+scp test dev@dev.box:~/projects
+tmux new -s test
+make clean
+clear
+touch
+tar -xzvf main.tar.gz
+git commit -m "add feature"
+make clean
+ps aux
+ls
+chmod +x app
+kill 8250
+git commit -m "update README"
+nano
+cd
+git push
+kill 1574
+kill -9 4123
+sudo apt update
+python3 predict.py
+make clean
+sudo apt install pytest
+./predict.py
+zip {archive}.zip main
+touch
+make all
+pytest
+git push
+chmod +x test
+cd
+python3 predict.py
+cd
+unzip {archive}.zip
+touch
+whoami
+cd ..
+cd ~
+ssh admin@remote.server.com
+make all
+pip uninstall requests
+unzip {archive}.zip
+kill 4123
+deactivate
+g++ utils.cpp -o utils
+sudo apt update
+htop
+source venv/bin/activate
+source venv/bin/activate
+scp test user@dev.box:~/workspace
+history
+tar -xzvf main.tar.gz
+clang app.c -o app
+pip install requests
+htop
+rm
+htop
+git status
+cd
+zip {archive}.zip app
+cd ..
+git push
+g++ utils.cpp -o utils
+ls
+scp main dev@192.168.0.2:/home/dev
+ls -la
+wget http://example.com
+sudo apt update
+top
+zip {archive}.zip utils
+pip install flask
+cd
+pip install transformers
+brew install transformers
+zip {archive}.zip test
+kill -9 6062
+rm
+rm
+python3 -m venv venv
+sudo apt update
+cd ..
+nano
+pytest
+tmux new -s test
+sudo apt install torch
+git add .
+make
+git add .
+sudo apt update
+curl http://example.com
+ps aux
+chmod +x app
+g++ test.cpp -o test
+./main.py
+curl https://github.com
+cd ~
+chown admin:admin main
+vim
+clang app.c -o app
+cd ..
+cd
+clang app.c -o app
+cd ..
+kill 9660
+tmux new -s test
+sudo apt update
+whoami
+cd ~
+clang utils.c -o utils
+ssh dev@remote.server.com
+git add .
+pip uninstall requests
+git push
+mkdir
+tar -xzvf utils.tar.gz
+make
+scp main dev@remote.server.com:/home/dev
+git push
+ps aux
+wget https://api.openai.com
+make
+ls -la
+sudo apt install requests
+g++ main.cpp -o main
+cd /etc
+history
+chmod +x utils
+git push
+deactivate
+python train.py
+pip install pytest
+git commit -m "initial commit"
+brew install pytest
+wget http://example.com
+unzip {archive}.zip
+htop
+python3 script.py
+git push
+git add .
+vim
+scp test admin@dev.box:~/workspace
+./main.py
+make
+make clean
+pip uninstall flask
+python train.py
+brew install pytest
+sudo apt update
+brew install pytest
+python predict.py
+sudo apt update
+ls
+ssh admin@dev.box
+kill -9 4123
+mkdir
+wget https://github.com
+./predict.py
+python3 -m venv venv
+history
+pip uninstall numpy
+pytest
+cat
+python3 script.py
+nano
+ls
+sudo apt install transformers
+cd /etc
+sudo apt install flask
+kill -9 6164
+htop
+scp main user@dev.box:/home/dev
+git status
+nano
+kill 8250
+chmod +x app
+kill 4123
+pip uninstall pytest
+git push
+tar -xzvf app.tar.gz
+vim
+chmod +x utils
+ls -la
+nano
+top
+brew install flask
+./test
+cd ..
+pip uninstall requests
+make
+pip install numpy
+wget http://example.com
+pip uninstall requests
+history
+git add .
+nano
+pytest
+ps aux
+python3 main.py
+cd /etc
+touch
+clear
+python3 predict.py
+git add .
+whoami
+deactivate
+htop
+git commit -m "initial commit"
+cd /etc
+ls
+make clean
+make
+git commit -m "update README"
+brew install transformers
+history
+history
+pip install pytest
+rm
+wget https://github.com
+kill -9 4123
+unzip {archive}.zip
+cd ~
+source venv/bin/activate
+tmux new -s dev
+python main.py
+kill 4123
+brew install numpy
+chown admin:admin test
+git commit -m "initial commit"
+mkdir
+tmux new -s ml
+chown admin:admin test
+brew install pytest
+chmod +x test
+git push
+pip install flask
+sudo apt update
+brew install numpy
+htop
+clear
+clang app.c -o app
+pytest
+git add .
+git add .
+git push
+mkdir
+cd /etc
+curl https://github.com
+python main.py
+python main.py
+kill -9 4123
+cd /etc
+htop
+deactivate
+ps aux
+make all
+rm
+git commit -m "update README"
+python3 train.py
+./main.py
+cd
+make
+deactivate
+cd /etc
+make
+deactivate
+kill -9 3345
+chown user:user main
+git commit -m "cleanup"
+./script.py
+history
+deactivate
+tmux new -s test
+./test
+cat
+git status
+vim
+rm
+python3 predict.py
+nano
+cat
+python script.py
+zip {archive}.zip main
+clang main.c -o main
+python3 script.py
+curl http://example.com
+rm
+chown user:user test
+ssh user@dev.box
+sudo apt update
+vim
+mkdir
+clang main.c -o main
+pytest
+whoami
+whoami
+whoami
+tmux new -s test
+unzip {archive}.zip
+g++ utils.cpp -o utils
+g++ test.cpp -o test
+make clean
+history
+ls
+sudo apt update
+ps aux
+wget https://api.openai.com
+git push
+whoami
+ls
+ls -la
+sudo apt update
+curl http://example.com
+pytest
+kill 8995
+nano
+ls
+make all
+tar -xzvf main.tar.gz
+g++ utils.cpp -o utils
+brew install torch
+cd /etc
+clang main.c -o main
+make
+rm
+cd ~
+make all
+source venv/bin/activate
+cd ..
+mkdir
+g++ utils.cpp -o utils
+sudo apt update
+cd
+clear
+git add .
+make
+wget https://github.com
+nano
+kill 4123
+python3 -m venv venv
+zip {archive}.zip main
+make all
+python predict.py
+make clean
+chmod +x app
+zip {archive}.zip utils
+nano
+ssh dev@remote.server.com
+make clean
+sudo apt install flask
+history
+htop
+cat
+source venv/bin/activate
+pip uninstall requests
+chown admin:admin app
+cd ~
+unzip {archive}.zip
+deactivate
+touch
+tar -xzvf app.tar.gz
+chown dev:dev app
+zip {archive}.zip main
+kill 6062
+top
+cat
+make
+source venv/bin/activate
+ls -la
+pip install torch
+python3 train.py
+make
+curl https://api.openai.com
+zip {archive}.zip main
+kill -9 9660
+vim
+whoami
+htop
+make clean
+git push
+g++ main.cpp -o main
+./test
+nano
+touch
+scp main dev@192.168.0.2:/home/dev
+mkdir
