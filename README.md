@@ -59,7 +59,7 @@ python model/train_model.py    # Train and save best model
 
 ## 🧪 Run Interactive CLI
 ```bash
-python cli/main.py interactive
+python -m main interactive start
 ```
 Example:
 ```bash
