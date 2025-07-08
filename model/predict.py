@@ -4,8 +4,8 @@ import json
 import argparse
 import os
 
-from model_def import LSTMNextTokenPredictor
-from dataset import tokenize
+from .model_def import LSTMNextTokenPredictor
+from .dataset import tokenize
 
 # ==== Paths ====
 MODEL_PATH = "saved_models/best_model.pt"

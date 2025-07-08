@@ -3,19 +3,19 @@ from rich.console import Console
 from rich.table import Table
 from model.predict import predict_next_token
 
-app = typer.Typer()
 console = Console()
+cli = typer.Typer(name="interactive")
 
-@app.command()
-def interactive(top_k: int = 5):
+@cli.command()
+def start(top_k: int = 5):
     """
     Start an interactive autocomplete shell.
     """
-    console.print("[bold green]🧠 ML Terminal Autocomplete[/bold green] (type 'exit' to quit)\n")
+    console.print("[bold green]Terminal Autocomplete[/bold green] (type 'exit' to quit)\n")
 
     while True:
         try:
-            prompt = typer.prompt("[bold blue]>>>[/bold blue]")
+            prompt = console.input("[bold blue]>>>[/bold blue] ")
         except (KeyboardInterrupt, EOFError):
             console.print("\n[bold red]👋 Exiting...[/bold red]")
             break
@@ -34,6 +34,3 @@ def interactive(top_k: int = 5):
             table.add_row(token, f"{prob:.4f}")
 
         console.print(table)
-
-if __name__ == "__main__":
-    app()

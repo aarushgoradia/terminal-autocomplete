@@ -73,7 +73,51 @@ Example:
 ╰──────────────┴─────────────╯
 ```
 ## 📄 License
-MIT License
+[MIT License](LICENSE.txt)
 
-## ✨ Coming Soon
-🧩 Shell tab completion integration
+## 🚧 Roadmap
+
+This project is functional end-to-end, but there are several areas for improvement to increase usefulness, accuracy, and polish:
+
+### ✅ Phase 1 – Core Functionality (✔ Completed)
+- [x] Load and preprocess a user’s `bash_history`
+- [x] Tokenize sequences (char-level)
+- [x] Train an LSTM-based model to predict the next character
+- [x] Build a prediction engine using the trained model
+- [x] Implement a CLI with `typer` and styled output via `rich`
+- [x] Allow interactive predictions from user-typed shell fragments
+
+---
+
+### 🔄 Phase 2 – Model Improvement (⚙ In Progress)
+- [ ] Switch to **token-level modeling** (predict next full token, not character)
+- [ ] Improve dataset quality (real-world command history, fewer `<UNK>` tokens)
+- [ ] Add greedy or beam search to complete full word predictions from char-level model (if char-level is kept)
+- [ ] Add more training data (2k–5k lines) for better generalization
+- [ ] Introduce dropout/regularization tuning for better performance
+- [ ] Optionally try transformer-based architecture (`nn.Transformer`, `GPT2`, etc.)
+
+---
+
+### 📊 Phase 3 – Evaluation & Testing
+- [ ] Add train/val/test split (e.g., 80/10/10)
+- [ ] Report metrics during training (e.g., loss, accuracy)
+- [ ] Add test-time evaluation: given real partial commands, does the model predict the correct token?
+- [ ] Add per-epoch logging and loss visualization (e.g., `matplotlib`, `tensorboard`, or simple CLI output)
+
+---
+
+### 🎯 Phase 4 – User Experience & Features
+- [ ] Add shell-style **autocomplete** (TAB-key mimic, fuzzy match)
+- [ ] Auto-complete full commands rather than just showing suggestions
+- [ ] Add CLI option to show top-k completions as a single line or inline
+- [ ] Create a `bash` or `zsh` plugin that calls the model for real-time shell autocompletion
+- [ ] Make CLI installable via `pip` (`setup.py` or `pyproject.toml`)
+
+---
+
+### 📦 Phase 5 – Deployment & Distribution
+- [ ] Add `pip` install support (e.g., `pip install ml-terminal-autocomplete`)
+- [ ] Dockerize for easy use anywhere
+- [ ] Publish demo video/gif in README
+- [ ] Add usage examples in the README with screenshots
