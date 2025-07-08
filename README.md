@@ -2,7 +2,7 @@
 
 A lightweight ML-powered CLI tool that autocompletes your terminal commands based on your past `.bash_history`. Built using PyTorch, LSTM, and a custom tokenizer. This project stemmed from the fact that at work I have to use a ton of commands (that I tend to forget)!
 
----
+
 
 ## 🚀 Features
 
@@ -13,7 +13,7 @@ A lightweight ML-powered CLI tool that autocompletes your terminal commands base
 - Reusable model + vocab loading
 - CUDA and CPU-compatible
 
----
+
 
 ## 📁 Project Structure
 
@@ -72,9 +72,6 @@ Example:
 │ commit       │ 0.0544      │
 ╰──────────────┴─────────────╯
 ```
-## 📄 License
-[MIT License](LICENSE.txt)
-
 ## 🚧 Roadmap
 
 This project is functional end-to-end, but there are several areas for improvement to increase usefulness, accuracy, and polish:
