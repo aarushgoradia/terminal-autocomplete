@@ -2,36 +2,31 @@ import os
 import re
 import json
 import pickle
+import argparse
 from collections import Counter
 from typing import List, Tuple
 
-# ====== Tokenization Mode ======
-TOKEN_LEVEL = "char"  # change to "word" or "char"
-
 # ====== Tokenizer ======
-def tokenize(line: str) -> List[str]:
-    if TOKEN_LEVEL == "char":
-        return list(line.strip()) + ["<EOS>"]
-    else:
-        return line.strip().split() + ["<EOS>"]
+def tokenize(line: str, level: str) -> List[str]:
+    line = line.strip()
+    if not line:
+        return []
+    if level == "char":
+        return list(line) + ["<EOS>"]
+    return line.split() + ["<EOS>"]
 
 # ====== Sequence Generator ======
-def generate_sequences(lines: List[str], add_prefixes: bool = True, max_prefixes_per_token: int = 3) -> List[Tuple[List[str], str]]:
-    """
-    Generate input→target token pairs.
-    If char-level, adds all character-based sequence pairs.
-    If word-level, optionally includes token prefixes like 'git ch' → 'checkout'.
-    """
+def generate_sequences(lines: List[str], level: str, add_prefixes: bool = True) -> List[Tuple[List[str], str]]:
     sequences = []
     for line in lines:
-        tokens = tokenize(line)
+        tokens = tokenize(line, level)
         for i in range(1, len(tokens)):
             input_seq = tokens[:i]
             target = tokens[i]
             sequences.append((input_seq, target))
 
-            # Add prefixes only for word-level
-            if TOKEN_LEVEL == "word" and add_prefixes and 1 < len(target) <= 10 and re.match(r"^[a-zA-Z0-9\-_/]+$", target):
+            # Augment with prefixes for word-level
+            if level == "word" and add_prefixes and 1 < len(target) <= 10 and re.match(r"^[a-zA-Z0-9\-_/.]+$", target):
                 for j in range(2, min(len(target), 6)):
                     prefix = target[:j]
                     sequences.append((input_seq[:-1] + [prefix], target))
@@ -92,24 +87,34 @@ def batchify(sequences: List[Tuple[List[str], str]], token2id: dict, batch_size:
 
 # ====== CLI Entrypoint ======
 if __name__ == "__main__":
-    raw_path = "data/bash_history.txt"
-    seq_path = "data/tokenized_sequences.pkl"
-    vocab_path = "data/vocab.json"
+    parser = argparse.ArgumentParser(description="Generate tokenized training data")
+    parser.add_argument("--level", choices=["char", "word"], default="char", help="Tokenization level")
+    parser.add_argument("--input", default="data/bash_history.txt", help="Path to bash history file")
+    parser.add_argument("--out_seq", default=None, help="Output path for tokenized sequences")
+    parser.add_argument("--out_vocab", default=None, help="Output path for vocab JSON")
+    parser.add_argument("--add-prefixes", action="store_true", help="Add prefix-augmented sequences (only for word-level)")
+    args = parser.parse_args()
 
-    print(f"[*] Using {TOKEN_LEVEL}-level tokenization")
-    print(f"[*] Loading data from {raw_path}")
-    with open(raw_path, "r") as f:
+    level = args.level
+    print(f"[*] Using {level}-level tokenization")
+    print(f"[*] Loading from {args.input}")
+
+    with open(args.input, "r", encoding="utf-8", errors="replace") as f:
         lines = [line.strip() for line in f if line.strip()]
 
     print("[*] Generating sequences...")
-    sequences = generate_sequences(lines, add_prefixes=True)
-    save_sequences(sequences, seq_path)
-    print(f"[*] Saved {len(sequences)} sequences to {seq_path}")
+    sequences = generate_sequences(lines, level=level, add_prefixes=args.add_prefixes)
+
+    out_seq = args.out_seq or f"data/{level}_sequences.pkl"
+    out_vocab = args.out_vocab or f"data/{level}_vocab.json"
+
+    save_sequences(sequences, out_seq)
+    print(f"[*] Saved {len(sequences)} sequences to {out_seq}")
 
     print("[*] Building vocab...")
     token2id, id2token = build_vocab(sequences)
-    save_vocab(token2id, vocab_path)
-    print(f"[*] Saved vocab with {len(token2id)} tokens to {vocab_path}")
+    save_vocab(token2id, out_vocab)
+    print(f"[*] Saved vocab with {len(token2id)} tokens to {out_vocab}")
 
     print("[*] Sample examples:")
     for i in range(5):

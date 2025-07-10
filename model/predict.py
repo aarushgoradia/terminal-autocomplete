@@ -44,7 +44,7 @@ model.eval()
 
 # ==== Predict ====
 def predict_next_token(prompt: str, top_k: int = 5):
-    tokens = tokenize(prompt)
+    tokens = tokenize(prompt, level="word")
     token_ids = [vocab.get(tok, vocab["<UNK>"]) for tok in tokens]
     input_tensor = torch.tensor([token_ids], dtype=torch.long).to(device)
 
@@ -58,7 +58,7 @@ def predict_next_token(prompt: str, top_k: int = 5):
 
 # ==== CLI Entrypoint ====
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Predict next terminal token (character-level)")
+    parser = argparse.ArgumentParser(description="Predict next terminal token (word-level)")
     parser.add_argument("--prompt", type=str, required=True, help="e.g., 'git ch'")
     parser.add_argument("--top_k", type=int, default=5)
     args = parser.parse_args()

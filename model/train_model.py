@@ -8,8 +8,8 @@ from dataset import load_sequences, load_vocab, batchify
 from model_def import LSTMNextTokenPredictor
 
 # ==== Config ====
-DATA_PATH = "data/tokenized_sequences.pkl"
-VOCAB_PATH = "data/vocab.json"
+DATA_PATH = "data/word_sequences.pkl"         # <-- Word-level sequences
+VOCAB_PATH = "data/word_vocab.json"           # <-- Word-level vocab
 MODEL_SAVE_PATH = "saved_models/best_model.pt"
 CONFIG_SAVE_PATH = "saved_models/config.json"
 
@@ -19,6 +19,7 @@ HIDDEN_DIM = 256
 NUM_EPOCHS = 15
 LEARNING_RATE = 1e-3
 
+# ==== Device Setup ====
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"[INFO] Using device: {device}")
 
@@ -30,7 +31,7 @@ print("[*] Loading vocabulary...")
 token2id, _ = load_vocab(VOCAB_PATH)
 vocab_size = len(token2id)
 
-# ==== Save config ====
+# ==== Save model config ====
 os.makedirs(os.path.dirname(CONFIG_SAVE_PATH), exist_ok=True)
 with open(CONFIG_SAVE_PATH, "w") as f:
     json.dump({
@@ -39,7 +40,7 @@ with open(CONFIG_SAVE_PATH, "w") as f:
         "num_layers": 1
     }, f)
 
-# ==== Initialize Model ====
+# ==== Model Init ====
 model = LSTMNextTokenPredictor(
     vocab_size=vocab_size,
     embedding_dim=EMBED_DIM,
@@ -49,7 +50,7 @@ model = LSTMNextTokenPredictor(
 loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
-# ==== Training ====
+# ==== Training Loop ====
 print(f"[*] Training model for {NUM_EPOCHS} epochs...")
 best_loss = float("inf")
 
@@ -70,7 +71,7 @@ for epoch in range(NUM_EPOCHS):
         total_loss += loss.item()
 
     avg_loss = total_loss / len(batches)
-    print(f"Epoch {epoch+1}/{NUM_EPOCHS} - Loss: {avg_loss:.4f}")
+    print(f"Epoch {epoch + 1}/{NUM_EPOCHS} - Loss: {avg_loss:.4f}")
 
     if avg_loss < best_loss:
         print("[✓] New best model — saving.")
