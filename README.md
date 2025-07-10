@@ -72,6 +72,11 @@ Example:
 │ commit       │ 0.0544      │
 ╰──────────────┴─────────────╯
 ```
+
+## Data Reference
+
+Data is sources from [n12bash](https://github.com/TellinaTool/nl2bash)!
+
 ## Roadmap
 
 This project is functional end-to-end, but there are several areas for improvement to increase usefulness, accuracy, and polish:
