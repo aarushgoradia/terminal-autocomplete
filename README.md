@@ -75,7 +75,7 @@ Example:
 
 ## Data Reference
 
-Data is sources from [n12bash](https://github.com/TellinaTool/nl2bash)!
+The training/validation/testing data was sourced from [n12bash's](https://github.com/TellinaTool/nl2bash) set!
 
 ## Roadmap
 
