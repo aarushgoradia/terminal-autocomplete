@@ -1,5 +1,7 @@
 # Terminal Autocomplete
 
+This project is currently a work in progress
+
 A lightweight ML-powered CLI tool that autocompletes your terminal commands based on your past `.bash_history`. Built using PyTorch, LSTM, and a custom tokenizer. This project stemmed from the fact that at work I have to use a ton of commands (that I tend to forget)!
 
 
